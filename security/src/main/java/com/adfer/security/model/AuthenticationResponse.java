@@ -2,18 +2,32 @@ package com.adfer.security.model;
 
 public class AuthenticationResponse {
 	private String token;
+	private String refreshToken;
 
-	public AuthenticationResponse(String tokenString) {
+	public AuthenticationResponse(String tokenString, String refreshToken) {
 		this.token = tokenString;
+		this.refreshToken = refreshToken;
 	}
+	
 
-	public String getTokenString() {
+	public String getToken() {
 		return token;
 	}
 
-	public void setTokenString(String tokenString) {
-		this.token = tokenString;
+
+	public void setToken(String token) {
+		this.token = token;
 	}
+
+
+	public String getRefreshToken() {
+		return refreshToken;
+	}
+
+	public void setRefreshToken(String refreshToken) {
+		this.refreshToken = refreshToken;
+	}
+
 	
 	
 }

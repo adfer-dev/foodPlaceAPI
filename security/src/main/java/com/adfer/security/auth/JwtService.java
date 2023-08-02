@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
@@ -17,10 +18,14 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
-
-    private static final String SECRET_KEY = "np9/XGT9E3y/fC/bJCPb2mCB46aXiIIqekqT+MICDeXhA6eBXx+WqjiRFuVTJi8Cs+TBqo86C2P8HCpbE6sEJf+dNhGHG8b9+QnfHSnRzwP1DkzcmEBWGrde9yLrtYXKPSIgWwMPgkF9+NCNOf9xSsCeE2R0N9Nh34155z+7oXEWa7QBTxhr98L1FfdgLjrRIXU5EFKJf1bycgn5KwQVk61TE9xexptjXVzvA9A9tI3Z3L94hcBt5hbluwEiltHJvmvfT6u5fN1sh5Nmm0yrZsSaBGCxjaUW+wGfVDYdI+0AZwPrgTipoWUUtFJL8D0yWlOnicu7M8sMdyea9b3lNFNnSi31tICyLddmuroy3fw=";
-    
-    String extractUserName(String jwtToken) {
+	@Value("${application.security.jwt.secret-key}")
+    private  String secretKey;
+	@Value("${application.security.jwt.expiration}")
+	private long expiration;
+	@Value("${application.security.jwt.refresh-expiration}")
+	private long refreshExpiration;
+	
+    public String extractUserName(String jwtToken) {
         return extractClaim(jwtToken, Claims::getSubject);
     }
     
@@ -28,15 +33,26 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
     
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts
+    private String buildToken (Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+    	return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)) //token will be valid for 24 hours
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) //token will be valid for 24 hours
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();          
+                .compact();   
+    }
+    
+    
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, this.expiration);
+    }
+    
+    public String generateRefreshToken(
+    	      UserDetails userDetails
+    	  ) {
+    	    return buildToken(new HashMap<>(), userDetails, this.refreshExpiration);
     }
     
     public boolean isTokenValid (String token, UserDetails userDetails) {
@@ -59,7 +75,7 @@ public class JwtService {
     }
 
     private Key getSigningKey() {
-        byte [] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte [] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 

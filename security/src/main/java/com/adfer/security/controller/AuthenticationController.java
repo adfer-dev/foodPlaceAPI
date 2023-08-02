@@ -6,9 +6,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adfer.security.auth.JwtService;
 import com.adfer.security.model.AuthenticationRequest;
 import com.adfer.security.model.AuthenticationResponse;
 import com.adfer.security.model.RegisterRequest;
+
+import io.jsonwebtoken.io.IOException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,5 +33,10 @@ public class AuthenticationController {
 	@PostMapping("/authenticate")
 	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest body) {
 		return ResponseEntity.ok(authenticationService.authenticate(body));
+	}
+	
+	@PostMapping("/refresh-token")
+	 public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		    authenticationService.refreshToken(request, response);
 	}
 }
