@@ -12,22 +12,22 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "food-site_service")
-public class FoodSiteService {
+@Table(name = "food-place_service")
+public class FoodPlaceService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	@ManyToMany(mappedBy = "services")
 	@JsonBackReference
-	private Set<FoodSite> foodSites;
+	private Set<FoodPlace> foodPlaces;
 	
-	public FoodSiteService() {
+	public FoodPlaceService() {
 	}
 	
-	public FoodSiteService(String name, Set<FoodSite> foodSites) {
+	public FoodPlaceService(String name, Set<FoodPlace> foodSites) {
 		this.name = name;
-		this.foodSites = foodSites;
+		this.foodPlaces = foodSites;
 	}
 	
 	public int getId() {
@@ -42,12 +42,13 @@ public class FoodSiteService {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<FoodSite> getFoodSites() {
-		return foodSites;
+
+	public Set<FoodPlace> getFoodPlaces() {
+		return foodPlaces;
 	}
-	public void setFoodSites(Set<FoodSite> foodSites) {
-		this.foodSites = foodSites;
+
+	public void setFoodPlaces(Set<FoodPlace> foodPlaces) {
+		this.foodPlaces = foodPlaces;
 	}
-	
-	
+
 }

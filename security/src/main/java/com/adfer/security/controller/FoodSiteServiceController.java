@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.adfer.security.model.FoodSiteService;
-import com.adfer.security.repository.FoodSiteServiceRepository;
+import com.adfer.security.model.FoodPlaceService;
+import com.adfer.security.repository.FoodPlaceServiceRepository;
 
 @RestController
-@RequestMapping("/api/v1/food-site_services")
+@RequestMapping("/api/v1/food-place_services")
 public class FoodSiteServiceController {
 	
-	private final FoodSiteServiceRepository foodSiteServiceRepository;
+	private final FoodPlaceServiceRepository foodSiteServiceRepository;
 
-	public FoodSiteServiceController(FoodSiteServiceRepository foodSiteServiceRepository) {
+	public FoodSiteServiceController(FoodPlaceServiceRepository foodSiteServiceRepository) {
 		this.foodSiteServiceRepository = foodSiteServiceRepository;
 	}
 	
@@ -28,11 +28,11 @@ public class FoodSiteServiceController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getFoodSite (@RequestParam Integer id) {
-		return ResponseEntity.ok(foodSiteServiceRepository.findFoodSiteServiceById(id).get());
+		return ResponseEntity.ok(foodSiteServiceRepository.findFoodPlaceServiceById(id).get());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> addFoodSite (@RequestBody FoodSiteService foodSiteService) {
+	public ResponseEntity<Object> addFoodSite (@RequestBody FoodPlaceService foodSiteService) {
 		foodSiteServiceRepository.save(foodSiteService);
 		return ResponseEntity.ok(foodSiteService);
 	}

@@ -8,21 +8,21 @@ import org.springframework.stereotype.Service;
 
 import com.adfer.security.model.AddFoodSiteRequest;
 import com.adfer.security.model.FoodKind;
-import com.adfer.security.model.FoodSite;
+import com.adfer.security.model.FoodPlace;
 import com.adfer.security.model.FoodSiteContact;
-import com.adfer.security.model.FoodSiteService;
+import com.adfer.security.model.FoodPlaceService;
 import com.adfer.security.repository.FoodKindRepository;
-import com.adfer.security.repository.FoodSiteRepository;
-import com.adfer.security.repository.FoodSiteServiceRepository;
+import com.adfer.security.repository.FoodPlaceRepository;
+import com.adfer.security.repository.FoodPlaceServiceRepository;
 
 @Service
 public class FoodSiteServ {
-	private final FoodSiteRepository foodSiteRepository;
+	private final FoodPlaceRepository foodSiteRepository;
 	private final FoodKindRepository foodKindRepository;
-	private final FoodSiteServiceRepository foodSiteServiceRepository;
+	private final FoodPlaceServiceRepository foodSiteServiceRepository;
 	
-	public FoodSiteServ(FoodSiteRepository foodSiteRepository, FoodKindRepository foodKindRepository,
-			FoodSiteServiceRepository foodSiteServiceRepository) {
+	public FoodSiteServ(FoodPlaceRepository foodSiteRepository, FoodKindRepository foodKindRepository,
+			FoodPlaceServiceRepository foodSiteServiceRepository) {
 		this.foodSiteRepository = foodSiteRepository;
 		this.foodKindRepository = foodKindRepository;
 		this.foodSiteServiceRepository = foodSiteServiceRepository;
@@ -30,17 +30,17 @@ public class FoodSiteServ {
 	
 	public void addFoodSite (AddFoodSiteRequest request) {
 		 Set <FoodKind> foodKinds = new HashSet<FoodKind>();
-		 Set <FoodSiteService> foodSiteServices = new HashSet<FoodSiteService>();
+		 Set <FoodPlaceService> foodSiteServices = new HashSet<FoodPlaceService>();
 		 
 		 request.getFoodKinds().forEach(foodKindId -> {
 			 foodKinds.add(foodKindRepository.findFoodKindById(foodKindId).get());
 		 });
 		 
 		request.getFoodServices().forEach(foodServicesId -> {
-			foodSiteServices.add(foodSiteServiceRepository.findFoodSiteServiceById(foodServicesId).get());
+			foodSiteServices.add(foodSiteServiceRepository.findFoodPlaceServiceById(foodServicesId).get());
 		});
 		
-		FoodSite foodSite = new FoodSite(new FoodSiteContact(request.getAddress(), request.getTelephoneNumber(), request.getWebsiteUrl(), request.getSchedule())
+		FoodPlace foodSite = new FoodPlace(new FoodSiteContact(request.getAddress(), request.getTelephoneNumber(), request.getWebsiteUrl(), request.getSchedule())
 				, foodKinds, foodSiteServices);
 		
 		foodSiteRepository.save(foodSite);

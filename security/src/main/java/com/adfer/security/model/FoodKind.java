@@ -21,15 +21,15 @@ public class FoodKind {
 	private String description;
 	@ManyToMany(mappedBy = "foodKinds")
 	@JsonBackReference
-	private Set<FoodSite> foodSites;
+	private Set<FoodPlace> foodPlaces;
 	
 	public FoodKind() {
 	}
 
-	public FoodKind(String name, String description, Set<FoodSite> foodSites) {
+	public FoodKind(String name, String description, Set<FoodPlace> foodSites) {
 		this.name = name;
 		this.description = description;
-		this.foodSites = foodSites;
+		this.foodPlaces = foodSites;
 	}
 
 	public int getId() {
@@ -56,13 +56,15 @@ public class FoodKind {
 		this.description = description;
 	}
 
-	public Set<FoodSite> getFoodSites() {
-		return foodSites;
+	public Set<FoodPlace> getFoodPlaces() {
+		return foodPlaces;
 	}
 
-	public void setFoodSites(Set<FoodSite> foodSites) {
-		this.foodSites = foodSites;
+	public void setFoodPlaces(Set<FoodPlace> foodPlaces) {
+		this.foodPlaces = foodPlaces;
 	}
+
+	
 	
 
 }

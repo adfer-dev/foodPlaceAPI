@@ -17,8 +17,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "food-site")
-public class FoodSite {
+@Table(name = "food-place")
+public class FoodPlace {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -26,24 +26,24 @@ public class FoodSite {
 	private FoodSiteContact contact;
 	@ManyToMany
 	@JoinTable(
-			name = "food-site_food-kind",
-			joinColumns = @JoinColumn(name = "food-site_id"),
+			name = "food-place_food-kind",
+			joinColumns = @JoinColumn(name = "food-place_id"),
 			inverseJoinColumns = @JoinColumn(name = "food-kind_id")
 	)
 	private Set<FoodKind> foodKinds;
 	@ManyToMany
 	@JoinTable(
-			name = "food-site_site-service",
-			joinColumns = @JoinColumn(name = "food-site_id"),
-			inverseJoinColumns = @JoinColumn(name = "site-service_id")
+			name = "food-place_place-service",
+			joinColumns = @JoinColumn(name = "food-place_id"),
+			inverseJoinColumns = @JoinColumn(name = "place-service_id")
 	)
-	private Set<FoodSiteService> services;
+	private Set<FoodPlaceService> services;
 	
-	public FoodSite() {
+	public FoodPlace() {
 	}
 	
 	
-	public FoodSite(FoodSiteContact contact, Set<FoodKind> foodKinds, Set<FoodSiteService> services) {
+	public FoodPlace(FoodSiteContact contact, Set<FoodKind> foodKinds, Set<FoodPlaceService> services) {
 		this.contact = contact;
 		this.foodKinds = foodKinds;
 		this.services = services;
@@ -72,10 +72,10 @@ public class FoodSite {
 	public void setFoodKinds(Set<FoodKind> foodKinds) {
 		this.foodKinds = foodKinds;
 	}
-	public Set<FoodSiteService> getServices() {
+	public Set<FoodPlaceService> getServices() {
 		return services;
 	}
-	public void setServices(Set<FoodSiteService> services) {
+	public void setServices(Set<FoodPlaceService> services) {
 		this.services = services;
 	}
 	
