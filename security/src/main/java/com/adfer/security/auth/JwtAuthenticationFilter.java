@@ -2,6 +2,9 @@ package com.adfer.security.auth;
 
 import java.io.IOException;
 
+import javax.naming.AuthenticationException;
+
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,10 +49,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         try {
         	userEmail = jwtService.extractUserName(jwtToken);
 		} catch (ExpiredJwtException e) {
-			response.sendError(401);
+			System.err.print(e);
 		}
         
-        
+       
         // Check that user mail is not null and user hasn't been authenticated yet.
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
@@ -64,7 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             }
         }
         
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
     }
     
 }

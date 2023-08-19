@@ -2,6 +2,7 @@ package com.adfer.security.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +14,11 @@ import com.adfer.security.repository.FoodPlaceServiceRepository;
 
 @RestController
 @RequestMapping("/api/v1/food-place_services")
-public class FoodSiteServiceController {
+public class FoodPlaceServiceController {
 	
 	private final FoodPlaceServiceRepository foodSiteServiceRepository;
 
-	public FoodSiteServiceController(FoodPlaceServiceRepository foodSiteServiceRepository) {
+	public FoodPlaceServiceController(FoodPlaceServiceRepository foodSiteServiceRepository) {
 		this.foodSiteServiceRepository = foodSiteServiceRepository;
 	}
 	
@@ -27,7 +28,7 @@ public class FoodSiteServiceController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getFoodSite (@RequestParam Integer id) {
+	public ResponseEntity<Object> getFoodSite (@PathVariable Integer id) {
 		return ResponseEntity.ok(foodSiteServiceRepository.findFoodPlaceServiceById(id).get());
 	}
 	

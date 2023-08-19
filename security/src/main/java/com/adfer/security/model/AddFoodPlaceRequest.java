@@ -2,24 +2,40 @@ package com.adfer.security.model;
 
 import java.util.ArrayList;
 
-public class AddFoodSiteRequest {
+public class AddFoodPlaceRequest {
+	private String name;
 	private String address;
 	private String telephoneNumber;
 	private String websiteUrl;
 	private String schedule;
 	private ArrayList<Integer> foodKinds;
 	private ArrayList<Integer> foodServices;
+	private ArrayList<Integer> placeKinds;
 	
-	public AddFoodSiteRequest(String address, String telephoneNumber, String websiteUrl, String schedule,
-			ArrayList<Integer> foodKinds, ArrayList<Integer> foodServices) {
+	
+	public AddFoodPlaceRequest(String name, String address, String telephoneNumber, String websiteUrl, String schedule,
+			ArrayList<Integer> foodKinds, ArrayList<Integer> foodServices, ArrayList<Integer> placeKinds) {
+		super();
+		this.name = name;
 		this.address = address;
 		this.telephoneNumber = telephoneNumber;
 		this.websiteUrl = websiteUrl;
 		this.schedule = schedule;
 		this.foodKinds = foodKinds;
 		this.foodServices = foodServices;
+		this.placeKinds = placeKinds;
 	}
 	
+	
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -55,6 +71,12 @@ public class AddFoodSiteRequest {
 	}
 	public void setFoodServices(ArrayList<Integer> foodServices) {
 		this.foodServices = foodServices;
+	}
+	public ArrayList<Integer> getPlaceKinds() {
+		return placeKinds;
+	}
+	public void setPlaceKinds(ArrayList<Integer> placeKinds) {
+		this.placeKinds = placeKinds;
 	}
 	
 	

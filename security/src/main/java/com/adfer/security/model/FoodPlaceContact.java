@@ -1,16 +1,16 @@
 package com.adfer.security.model;
 
-public class FoodSiteContact {
-
+public class FoodPlaceContact {
+	
 	private String address;
 	private String telephoneNumber;
 	private String websiteUrl;
 	private String schedule;
 	
-	public FoodSiteContact() {
+	public FoodPlaceContact() {
 	}
 
-	public FoodSiteContact(String address, String telephoneNumber, String websiteUrl, String schedule) {
+	public FoodPlaceContact(String address, String telephoneNumber, String websiteUrl, String schedule) {
 		this.address = address;
 		this.telephoneNumber = telephoneNumber;
 		this.websiteUrl = websiteUrl;
