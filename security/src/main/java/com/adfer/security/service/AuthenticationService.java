@@ -1,9 +1,8 @@
-package com.adfer.security.controller;
+package com.adfer.security.service;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.adfer.security.auth.JwtService;
 import com.adfer.security.model.AuthenticationRequest;
 import com.adfer.security.model.AuthenticationResponse;
@@ -15,11 +14,12 @@ import com.adfer.security.model.UserRole;
 import com.adfer.security.repository.TokenRepository;
 import com.adfer.security.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Class that perform authentication operations
+ */
 @Service
 public class AuthenticationService {
 

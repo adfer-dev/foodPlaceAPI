@@ -5,16 +5,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.adfer.security.auth.JwtService;
 import com.adfer.security.model.AuthenticationRequest;
 import com.adfer.security.model.AuthenticationResponse;
 import com.adfer.security.model.RegisterRequest;
+import com.adfer.security.service.AuthenticationService;
 
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Class that handles authentication endpoints (register, authenticate and refresh token)
+ */
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {

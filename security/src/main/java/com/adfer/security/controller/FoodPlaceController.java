@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.server.ResponseStatusException;
-
-import com.adfer.security.config.RestResponseEntityExceptionHandler;
 import com.adfer.security.model.AddFoodPlaceRequest;
 import com.adfer.security.model.FoodPlace;
+import com.adfer.security.service.FoodPlaceServ;
 
 import jakarta.validation.Valid;
 
@@ -23,34 +20,27 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/food-places")
 public class FoodPlaceController {
 	private final FoodPlaceServ foodSiteServ;
-	private final RestResponseEntityExceptionHandler responseEntityExceptionHandler;
 
-	public FoodPlaceController(FoodPlaceServ foodSiteServ, RestResponseEntityExceptionHandler responseEntityExceptionHandler) {
+	public FoodPlaceController(FoodPlaceServ foodSiteServ) {
 		this.foodSiteServ = foodSiteServ;
-		this.responseEntityExceptionHandler = responseEntityExceptionHandler;
 	}
 	
 	@GetMapping
-	public ResponseEntity<Object> getAllFoodSites() {
+	public ResponseEntity<Object> getAllFoodPlace() {
 		return ResponseEntity.ok(foodSiteServ.getAllFoodPlaces());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getFoodSite(@PathVariable Integer id) {
-		try {
-			Optional<FoodPlace> foodPlace = foodSiteServ.getFoodPlace(id);
-			
-			return !foodPlace.isEmpty()
-					? ResponseEntity.ok(foodPlace)
-					: ResponseEntity.status(404).body("Food place not found");		
-			
-		} catch (MethodArgumentTypeMismatchException e) {
-			throw new ResponseStatusException(400, "Id must be a number", e);
-		}
+	public ResponseEntity<Object> getFoodPlace(@PathVariable Integer id) {
+		Optional<FoodPlace> foodPlace = foodSiteServ.getFoodPlace(id);
+		
+		return !foodPlace.isEmpty()
+				? ResponseEntity.ok(foodPlace)
+				: ResponseEntity.status(404).body("Food place not found");
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> addFoodSite (@Valid @RequestBody AddFoodPlaceRequest request ) {
-		return ResponseEntity.ok(foodSiteServ.addFoodPlace(request));
+	public ResponseEntity<Object> addFoodPlace (@RequestBody AddFoodPlaceRequest request ) {
+		return ResponseEntity.status(201).body(foodSiteServ.addFoodPlace(request));
 	}
 }

@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "food-kind")
@@ -17,6 +18,7 @@ public class FoodKind {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotBlank(message = "A name must be provided.")
 	private String name;
 	private String description;
 	@ManyToMany(mappedBy = "foodKinds")
