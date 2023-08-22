@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 /*
  * Model class that represents a food place's kind (bar, restaurant, gastro, ...)
  */
@@ -20,6 +21,7 @@ public class FoodPlaceKind {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotBlank(message = "A name must be provided.")
 	private String name;
 	private String description;
 	@ManyToMany(mappedBy = "kinds")

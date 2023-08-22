@@ -2,21 +2,16 @@ package com.adfer.security.model;
 
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "food-place")
@@ -54,7 +49,7 @@ public class FoodPlace {
 	public FoodPlace() {
 	}
 	
-	public FoodPlace(@NotBlank(message = "A name must be provided.") String name, FoodPlaceContact contact,
+	public FoodPlace(String name, FoodPlaceContact contact,
 			Set<FoodKind> foodKinds, Set<FoodPlaceService> services, Set<FoodPlaceKind> kinds) {
 		super();
 		this.name = name;

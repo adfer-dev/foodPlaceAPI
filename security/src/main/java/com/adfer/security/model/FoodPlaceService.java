@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "food-place_service")
@@ -17,19 +18,20 @@ public class FoodPlaceService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotBlank(message = "A name must be provided.")
 	private String name;
 	@ManyToMany(mappedBy = "services")
 	@JsonBackReference
 	private Set<FoodPlace> foodPlaces;
-	
+
 	public FoodPlaceService() {
 	}
-	
+
 	public FoodPlaceService(String name, Set<FoodPlace> foodSites) {
 		this.name = name;
 		this.foodPlaces = foodSites;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

@@ -1,11 +1,9 @@
-package com.adfer.security.controller;
+package com.adfer.security.service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.adfer.security.model.AddFoodPlaceRequest;
 import com.adfer.security.model.FoodKind;
@@ -42,29 +40,28 @@ public class FoodPlaceServ {
 	}
 	
 	public FoodPlace addFoodPlace (AddFoodPlaceRequest request) {
-		 Set <FoodKind> foodKinds = new HashSet<FoodKind>();
-		 Set <FoodPlaceService> foodSiteServices = new HashSet<FoodPlaceService>();
+		 Set<FoodKind> foodKinds = new HashSet<FoodKind>();
+		 Set<FoodPlaceService> foodSiteServices = new HashSet<FoodPlaceService>();
 		 Set<FoodPlaceKind> foodPlaceKinds = new HashSet<FoodPlaceKind>();
 		 
-		 request.getFoodKinds().forEach(foodKindId -> {
+		 request.foodKinds().forEach(foodKindId -> {
 			 foodKinds.add(foodKindRepository.findFoodKindById(foodKindId).get());
 		 });
 		 
-		request.getFoodServices().forEach(foodServicesId -> {
+		request.foodServices().forEach(foodServicesId -> {
 			foodSiteServices.add(foodPlaceServiceRepository.findFoodPlaceServiceById(foodServicesId).get());
 		});
 		
-		request.getPlaceKinds().forEach(placeKindId -> {
+		request.placeKinds().forEach(placeKindId -> {
 			foodPlaceKinds.add(foodPlaceKindRepository.findFoodPlaceKindById(placeKindId).get());
 		});
 		
-		FoodPlace foodPlace = new FoodPlace(request.getName(), new FoodPlaceContact(request.getAddress(), request.getTelephoneNumber(), request.getWebsiteUrl(), request.getSchedule())
+		FoodPlace foodPlace = new FoodPlace(request.name(), new FoodPlaceContact(request.address(), request.telephoneNumber(), request.websiteUrl(), request.schedule())
 				, foodKinds, foodSiteServices, foodPlaceKinds);
 		
 		foodPlaceRepository.save(foodPlace);
 		
 		return foodPlace;
-		
 	}
 	
 	

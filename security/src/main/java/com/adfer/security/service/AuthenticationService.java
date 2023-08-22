@@ -1,9 +1,10 @@
-package com.adfer.security.controller;
+package com.adfer.security.service;
+
+import java.io.IOException;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.adfer.security.auth.JwtService;
 import com.adfer.security.model.AuthenticationRequest;
 import com.adfer.security.model.AuthenticationResponse;
@@ -15,11 +16,12 @@ import com.adfer.security.model.UserRole;
 import com.adfer.security.repository.TokenRepository;
 import com.adfer.security.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Class that perform the API authentication operations
+ */
 @Service
 public class AuthenticationService {
 
@@ -43,7 +45,6 @@ public class AuthenticationService {
 		
 		user.setToken(token);
 		userRepository.save(user);
-		tokenRepository.save(token);
 		
 		return new AuthenticationResponse(token.getTokenValue(), jwtService.generateRefreshToken(user));
 	}
@@ -67,11 +68,14 @@ public class AuthenticationService {
 	    final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 	    final String refreshToken;
 	    final String userEmail;
+	    
 	    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
 	      return;
 	    }
+	    
 	    refreshToken = authHeader.substring(7);
 	    userEmail = jwtService.extractUserName(refreshToken);
+	    
 	    if (userEmail != null) {
 	      var user = userRepository.findByEmail(userEmail)
 	              .orElseThrow();
@@ -82,8 +86,8 @@ public class AuthenticationService {
 	        AuthenticationResponse authResponse = new AuthenticationResponse(token, refreshToken);
 	        try {
 				new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-			} catch (java.io.IOException e) {
-				e.printStackTrace();
+			} catch (IOException e) {
+				System.err.print(e);
 			}
 	      }
 	    }
