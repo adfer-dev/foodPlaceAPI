@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Class that perform the API authentication operations
+ * Class that performs the API authentication operations
  */
 @Service
 public class AuthenticationService {
@@ -40,7 +40,7 @@ public class AuthenticationService {
 
 
 	public AuthenticationResponse register(RegisterRequest registerRequest) {
-		User user = new User(registerRequest.getFirstName(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()), UserRole.ADMIN, null);
+		User user = new User(registerRequest.getFirstName(), registerRequest.getEmail(), passwordEncoder.encode(registerRequest.getPassword()), UserRole.USER, null);
 		Token token = new Token(jwtService.generateToken(user), TokenType.BEARER, user);
 		
 		user.setToken(token);

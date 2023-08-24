@@ -34,7 +34,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, WebRequest request) throws JsonProcessingException {
     	
-    	Map<String, String> errorMap = Collections.singletonMap(ex.getPropertyName(), "Must be " + ex.getRequiredType().getSimpleName());
+    	Map<String, String> errorMessageMap = Collections.singletonMap(
+    			ex.getPropertyName(),
+    			"Must be " + ex.getRequiredType().getSimpleName());
     	MultiValueMap<String, String> headersMap = new LinkedMultiValueMap<String, String>();
     	ObjectMapper jsonMapper = new ObjectMapper();
     	
@@ -43,7 +45,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     	
     	return handleExceptionInternal(
         		ex, 
-        		jsonMapper.writeValueAsString(errorMap), 
+        		jsonMapper.writeValueAsString(errorMessageMap), 
         		new HttpHeaders(headersMap),
         		HttpStatus.BAD_REQUEST, request);
     }

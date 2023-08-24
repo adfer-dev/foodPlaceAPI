@@ -1,10 +1,6 @@
 package com.adfer.security.auth;
 
 import java.io.IOException;
-
-import javax.naming.AuthenticationException;
-
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

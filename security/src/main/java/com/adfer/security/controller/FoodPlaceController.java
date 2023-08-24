@@ -1,7 +1,6 @@
 package com.adfer.security.controller;
 
 import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import com.adfer.security.model.AddFoodPlaceRequest;
 import com.adfer.security.model.FoodPlace;
 import com.adfer.security.service.FoodPlaceServ;
 
-import jakarta.validation.Valid;
 
 
 @RestController
@@ -40,7 +38,7 @@ public class FoodPlaceController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> addFoodPlace (@RequestBody AddFoodPlaceRequest request ) {
+	public ResponseEntity<FoodPlace> addFoodPlace (@RequestBody AddFoodPlaceRequest request ) {
 		return ResponseEntity.status(201).body(foodSiteServ.addFoodPlace(request));
 	}
 }
