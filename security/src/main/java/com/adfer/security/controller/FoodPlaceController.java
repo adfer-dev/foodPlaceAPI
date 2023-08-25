@@ -38,7 +38,7 @@ public class FoodPlaceController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<FoodPlace> addFoodPlace (@RequestBody AddFoodPlaceRequest request ) {
+	public ResponseEntity<Object> addFoodPlace (@RequestBody AddFoodPlaceRequest request ) {
 		return ResponseEntity.status(201).body(foodSiteServ.addFoodPlace(request));
 	}
 }

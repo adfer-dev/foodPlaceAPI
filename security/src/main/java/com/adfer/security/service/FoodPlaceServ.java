@@ -48,7 +48,7 @@ public class FoodPlaceServ {
 			 foodKinds.add(foodKindRepository.findFoodKindById(foodKindId).get());
 		 });
 		 
-		request.foodServices().forEach(foodServicesId -> {
+		request.services().forEach(foodServicesId -> {
 			foodSiteServices.add(foodPlaceServiceRepository.findFoodPlaceServiceById(foodServicesId).get());
 		});
 		

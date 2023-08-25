@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.validation.ConstraintViolationException;
+
 /**
  * Class that handles the API response when some exceptions take place.
  */
@@ -59,6 +58,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolation (ConstraintViolationException ex, WebRequest request) throws JsonProcessingException {
     	
+    	// Build response message in JSON format
     	Map<String, String> constraintViolations = new LinkedHashMap<String, String>();
     	MultiValueMap<String, String> responseHeaders = new LinkedMultiValueMap<String, String>();
     	ObjectMapper jsonMapper = new ObjectMapper();
@@ -69,7 +69,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     				String.valueOf(constraint.getPropertyPath()), 
     				constraint.getMessage());
     	});
-    	
+
     	// Add response headers
     	responseHeaders.add(HttpHeaders.CONTENT_TYPE, "application/json");
     	

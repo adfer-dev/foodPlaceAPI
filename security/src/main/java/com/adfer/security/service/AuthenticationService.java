@@ -1,7 +1,6 @@
 package com.adfer.security.service;
 
 import java.io.IOException;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Class that performs the API authentication operations
+ * Class that perform authentication operations
  */
 @Service
 public class AuthenticationService {

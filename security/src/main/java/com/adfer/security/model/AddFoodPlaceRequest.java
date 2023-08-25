@@ -9,7 +9,7 @@ public record AddFoodPlaceRequest (
 		String websiteUrl, 
 		String schedule,
 		ArrayList<Integer> foodKinds, 
-		ArrayList<Integer> foodServices, 
+		ArrayList<Integer> services, 
 		ArrayList<Integer> placeKinds
 ) {
 	
