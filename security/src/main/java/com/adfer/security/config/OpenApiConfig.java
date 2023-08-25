@@ -13,16 +13,16 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(
 		info = @Info(
 				contact = @Contact(
-                        name = "Adferdev",
+                        name = "adferdev",
                         email = "adferdev@gmail.com",
                         url = ""
                 ),
-                description = "OpenApi documentation",
-                title = "OpenApi documentation - Adferdev",
+                description = "Food place API documentation",
+                title = "Food place API",
                 version = "1.0",
                 license = @License(
                         name = "MIT",
-                        url = "https://some-url.com"
+                        url = "https://mit-license.org/"
                 ),
                 termsOfService = "Terms of service"
 		),
@@ -44,7 +44,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 )
 @SecurityScheme(
         name = "bearerAuth",
-        description = "JWT auth description",
+        description = "Bearer authentication using JWT.",
         scheme = "bearer",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",

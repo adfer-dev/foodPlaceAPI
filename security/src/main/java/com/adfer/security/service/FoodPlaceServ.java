@@ -1,5 +1,7 @@
 package com.adfer.security.service;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +45,9 @@ public class FoodPlaceServ {
 		 Set<FoodKind> foodKinds = new HashSet<FoodKind>();
 		 Set<FoodPlaceService> foodSiteServices = new HashSet<FoodPlaceService>();
 		 Set<FoodPlaceKind> foodPlaceKinds = new HashSet<FoodPlaceKind>();
+		 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		 
-		 request.foodKinds().forEach(foodKindId -> {
+		 request.kinds().forEach(foodKindId -> {
 			 foodKinds.add(foodKindRepository.findFoodKindById(foodKindId).get());
 		 });
 		 
@@ -54,15 +57,20 @@ public class FoodPlaceServ {
 		
 		request.placeKinds().forEach(placeKindId -> {
 			foodPlaceKinds.add(foodPlaceKindRepository.findFoodPlaceKindById(placeKindId).get());
-		});
-		
-		FoodPlace foodPlace = new FoodPlace(request.name(), new FoodPlaceContact(request.address(), request.telephoneNumber(), request.websiteUrl(), request.schedule())
+		});		
+		FoodPlace foodPlace = new FoodPlace(
+				request.name(),
+				new FoodPlaceContact(request.address(),
+						request.telephoneNumber(),
+						request.websiteUrl(),
+						LocalTime.parse(request.openingTime(), timeFormatter),
+						LocalTime.parse(request.closingTime(), timeFormatter),
+						request.openingWeekDays())
 				, foodKinds, foodSiteServices, foodPlaceKinds);
 		
 		foodPlaceRepository.save(foodPlace);
 		
 		return foodPlace;
 	}
-	
-	
+		
 }

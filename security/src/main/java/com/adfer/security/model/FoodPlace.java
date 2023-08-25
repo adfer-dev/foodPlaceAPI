@@ -2,6 +2,7 @@ package com.adfer.security.model;
 
 import java.util.Set;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,10 +12,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "food-place")
+@Schema(name = "FoodPlace")
 public class FoodPlace {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +25,7 @@ public class FoodPlace {
 	@NotBlank(message = "A name must be provided.")
 	private String name;
 	@Embedded
+	@Valid
 	private FoodPlaceContact contact;
 	@ManyToMany
 	@JoinTable(
@@ -49,16 +53,16 @@ public class FoodPlace {
 	public FoodPlace() {
 	}
 	
-	public FoodPlace(String name, FoodPlaceContact contact,
+	
+	public FoodPlace(@NotBlank(message = "A name must be provided.") String name, FoodPlaceContact contact,
 			Set<FoodKind> foodKinds, Set<FoodPlaceService> services, Set<FoodPlaceKind> kinds) {
-		super();
 		this.name = name;
 		this.contact = contact;
 		this.foodKinds = foodKinds;
 		this.services = services;
 		this.kinds = kinds;
 	}
-	
+
 	// GETTERS && SETTERS
 	public int getId() {
 		return id;
