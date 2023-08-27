@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.adfer.security.model.FoodKind;
-import com.adfer.security.model.FoodPlaceKind;
 import com.adfer.security.service.FoodKindService;
 import com.adfer.security.utils.RequestBodyUtils;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

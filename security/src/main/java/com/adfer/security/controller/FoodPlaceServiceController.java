@@ -1,7 +1,5 @@
 package com.adfer.security.controller;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,12 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.adfer.security.model.FoodPlaceKind;
 import com.adfer.security.model.FoodPlaceService;
 import com.adfer.security.service.FoodPlaceServiceServ;
 import com.adfer.security.utils.RequestBodyUtils;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
