@@ -1,8 +1,6 @@
 package com.adfer.security.model;
 
 import java.util.Set;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +15,6 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "food-place")
-@Schema(name = "FoodPlace")
 public class FoodPlace {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +51,7 @@ public class FoodPlace {
 	}
 	
 	
-	public FoodPlace(@NotBlank(message = "A name must be provided.") String name, FoodPlaceContact contact,
+	public FoodPlace(String name, FoodPlaceContact contact,
 			Set<FoodKind> foodKinds, Set<FoodPlaceService> services, Set<FoodPlaceKind> kinds) {
 		this.name = name;
 		this.contact = contact;

@@ -47,30 +47,97 @@ public class FoodPlaceServ {
 		 Set<FoodPlaceKind> foodPlaceKinds = new HashSet<FoodPlaceKind>();
 		 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 		 
-		 request.kinds().forEach(foodKindId -> {
+		 request.getFoodKinds().forEach(foodKindId -> {
 			 foodKinds.add(foodKindRepository.findFoodKindById(foodKindId).get());
 		 });
 		 
-		request.services().forEach(foodServicesId -> {
+		request.getServices().forEach(foodServicesId -> {
 			foodSiteServices.add(foodPlaceServiceRepository.findFoodPlaceServiceById(foodServicesId).get());
 		});
 		
-		request.placeKinds().forEach(placeKindId -> {
+		request.getKinds().forEach(placeKindId -> {
 			foodPlaceKinds.add(foodPlaceKindRepository.findFoodPlaceKindById(placeKindId).get());
 		});		
 		FoodPlace foodPlace = new FoodPlace(
-				request.name(),
-				new FoodPlaceContact(request.address(),
-						request.telephoneNumber(),
-						request.websiteUrl(),
-						LocalTime.parse(request.openingTime(), timeFormatter),
-						LocalTime.parse(request.closingTime(), timeFormatter),
-						request.openingWeekDays())
+				request.getName(),
+				new FoodPlaceContact(request.getAddress(),
+						request.getTelephoneNumber(),
+						request.getWebsiteUrl(),
+						LocalTime.parse(request.getOpeningTime(), timeFormatter),
+						LocalTime.parse(request.getClosingTime(), timeFormatter),
+						request.getOpeningWeekDays())
 				, foodKinds, foodSiteServices, foodPlaceKinds);
 		
 		foodPlaceRepository.save(foodPlace);
 		
 		return foodPlace;
 	}
+	
+	public FoodPlace updateFoodPlace (AddFoodPlaceRequest request, Integer id) {
+		FoodPlace updateFoodPlace = foodPlaceRepository.findById(id).get();
 		
+		Optional.ofNullable(request.getName())
+			.ifPresent(updateFoodPlace::setName);
+		
+		Optional.ofNullable(request.getAddress())
+			.ifPresent(address -> updateFoodPlace.getContact().setAddress(address));
+		
+		Optional.ofNullable(request.getTelephoneNumber())
+			.ifPresent(telephoneNumber -> updateFoodPlace.getContact().setTelephoneNumber(telephoneNumber));
+		
+		Optional.ofNullable(request.getWebsiteUrl())
+		.ifPresent(websiteUrl -> updateFoodPlace.getContact().setWebsiteUrl(websiteUrl));
+		
+		Optional.ofNullable(request.getOpeningTime())
+			.map(LocalTime::parse)
+			.ifPresent(openingTime -> updateFoodPlace.getContact().setOpeningTime(openingTime));
+		
+		Optional.ofNullable(request.getClosingTime())
+			.map(LocalTime::parse)
+			.ifPresent(closingTime -> updateFoodPlace.getContact().setClosingTime(closingTime));
+		
+		Optional.ofNullable(request.getOpeningWeekDays())
+			.ifPresent(openingWeekdays -> updateFoodPlace.getContact().setOpeningWeekDays(openingWeekdays));
+		
+		Optional.ofNullable(request.getFoodKinds())
+			.ifPresent(foodKinds -> {
+				Set<FoodKind> newFoodKinds = new HashSet<FoodKind>();
+				
+				foodKinds.forEach(foodKind -> {
+					newFoodKinds.add(foodKindRepository.findById(foodKind).get());
+				});
+			});
+		
+		Optional.ofNullable(request.getServices())
+		.ifPresent(services -> {
+			Set<FoodPlaceService> newServices = new HashSet<FoodPlaceService>();
+			
+			services.forEach(foodKind -> {
+				newServices.add(foodPlaceServiceRepository.findById(foodKind).get());
+			});
+		});
+		
+		Optional.ofNullable(request.getKinds())
+		.ifPresent(kinds -> {
+			Set<FoodPlaceKind> newKinds = new HashSet<FoodPlaceKind>();
+			
+			kinds.forEach(foodKind -> {
+				newKinds.add(foodPlaceKindRepository.findById(foodKind).get());
+			});
+		});
+		
+		foodPlaceRepository.save(updateFoodPlace);
+		
+		return updateFoodPlace;
+		
+	}
+	
+	public void deleteFoodPlace (Integer id) {
+		foodPlaceRepository.deleteById(id);
+	}
+	
+	
+	public boolean foodPlaceExists (Integer id) {
+		return foodPlaceRepository.existsById(id);
+	}
 }

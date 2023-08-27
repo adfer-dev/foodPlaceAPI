@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import com.adfer.security.model.FoodKind;
+import com.adfer.security.model.FoodPlaceKind;
 import com.adfer.security.repository.FoodKindRepository;
 
 /**
@@ -31,5 +32,27 @@ public class FoodKindService {
 		foodKindRepository.save(foodKind);
 	}
 	
+	
+	public FoodKind updateFoodKind (Integer id, FoodKind foodKind) {
+		
+		FoodKind updatedFoodKind = foodKindRepository.findById(id).get();
+		
+		Optional.ofNullable(foodKind.getName())
+			.ifPresent(updatedFoodKind::setName);
+		
+		Optional.ofNullable(foodKind.getDescription())
+			.ifPresent(updatedFoodKind::setDescription);
+		
+		return updatedFoodKind;
+		
+	}
+	
+	public void deleteFoodKind (Integer id) {
+		foodKindRepository.deleteById(id);
+	}
+	
+	public boolean foodKindExists (Integer id) {
+		return foodKindRepository.existsById(id);
+	}
 	
 }

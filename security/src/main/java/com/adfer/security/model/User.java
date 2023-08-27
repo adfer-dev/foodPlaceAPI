@@ -15,6 +15,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -23,7 +25,9 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotBlank(message = "a user name must be provided.")
 	private String firstName;
+	@Pattern(regexp = "[a-z0-9]{3,20}@[a-z]+\\.[a-z]{2,}", message = "wrong email format. email can only contain under case characters and numbers.")
 	private String email;
 	private String password;
 	@Enumerated(EnumType.STRING)
